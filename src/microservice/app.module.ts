@@ -3,6 +3,7 @@ import { ApplicationCoreModule } from './application-core/application-core.modul
 import { InfraestructureModule } from './infraestructure/infraestructure.module';
 import { UserInterfaceModule } from './user-interface/user-interface.module';
 import { ConfigModule } from '@nestjs/config';
+import { FirebaseModule } from './firebase/firebase.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { ConfigModule } from '@nestjs/config';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    FirebaseModule,
   ],
   controllers: [],
   providers: [],

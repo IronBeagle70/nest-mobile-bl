@@ -1,6 +1,9 @@
-export class RegisterRequestDTO {
-  firstName: string;
-  lastName: string;
+export class LoginRequestDTO {
   email: string;
   password: string;
+}
+
+export class RegisterRequestDTO extends LoginRequestDTO {
+  firstName: string;
+  lastName: string;
 }

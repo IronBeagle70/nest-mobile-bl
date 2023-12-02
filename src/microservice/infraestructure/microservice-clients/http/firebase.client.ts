@@ -1,7 +1,15 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  updateProfile,
+} from 'firebase/auth';
 import { auth } from '../../firebase/firebase';
-import { RegisterRequestDTO } from 'src/microservice/application-core/auth/dto/auth.dto';
+import {
+  LoginRequestDTO,
+  RegisterRequestDTO,
+} from 'src/microservice/application-core/auth/dto/auth.dto';
 
 @Injectable()
 export class FirebaseClient {
@@ -33,5 +41,25 @@ export class FirebaseClient {
         },
       };
     }
+  }
+
+  async loginUser(payload: LoginRequestDTO) {
+    try {
+      const { email, password } = payload;
+      const login = await signInWithEmailAndPassword(auth, email, password);
+      return login;
+    } catch (error) {
+      this.logger.error(error);
+      return {
+        error: {
+          code: error.code,
+          errorMessage: error.message,
+        },
+      };
+    }
+  }
+
+  async logout() {
+    await signOut(auth);
   }
 }
